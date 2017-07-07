@@ -1,4 +1,4 @@
-#Densecap essay
+# Densecap essay
 * Title Page (Project Title, Author, Name of Degree & University, Supervisor, Date)
 * Executive Summary of Project (1 Page)
 * Declaration: signed by you (1 page)
