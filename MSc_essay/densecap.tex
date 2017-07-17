@@ -1,5 +1,48 @@
-\documentclass[12pt]{article}
+\documentclass[12pt,a4paper]{report}
 \usepackage{graphicx}
+\usepackage{subcaption}
+
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{caption}
+\usepackage{verbatim}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{comment}
+\usepackage{pdfpages}
+\usepackage{natbib}
+\usepackage{booktabs}
+\usepackage[toc,page]{appendix}
+\usepackage{url}
+\usepackage{csvsimple,longtable,booktabs}
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+ 
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=none,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+ 
+\lstset{style=mystyle}
+
+
+
 \graphicspath{ {images/}}
 \begin{document}
 
@@ -40,7 +83,7 @@ Dr. Jianguo \textsc{Zhang}
 {\large \today}\\[3cm] 
 
 
-\vfill % Fill the rest of the page with whitespace
+\vfill 
 
 \end{titlepage}
 \newpage
@@ -78,11 +121,132 @@ Last but not least, I would like to thank my parents and friends for their conti
 \pagenumbering{arabic}
 \section{Introduction}
 \section{Background}
-\section{Requirements specification}
+\subsection{Artificial Neural Network}
+Artificial neural network is inspired by biological neuron that has input and output.Normally, a typical biological neuron collects  signals in \textit{dentrites} and send out the signal through \textit{axon}.There is a structure called \textit{synapse} between neurons, it decides whether the signal will pass \textit{synapse} and arrive next neuron.
+\begin{figure}[h]
+\begin{subfigure}{0.5\linewidth}
+	\includegraphics[height=3.5cm,width=\textwidth]{n1.png}
+	\caption{Biological Neuron}
+\end{subfigure}
+\begin{subfigure}{0.5\linewidth}
+	\includegraphics[height=3.5cm,width=\textwidth]{Aneuron.png}
+	\caption{Artificial Neuron}
+\end{subfigure}
+\label{Biological Neuron and Artificial Neuron}
+\caption{Biological Neuron and Artificial Neuron}
+\end{figure}
+An artificial neuron is an information cell which can compute input with some special algorithm and output results.An artificial neural network is composed of hundreds or thousands of neurons.Each neuron gets input from last layer neurons and output to next neurons.The first layer is called input layer, the last layer is output layer, and all layers between the input layer and output layer are the hidden layer.Normally, we consider the Artificial neural network as a black box. It read data in the input layer and output result after amounts of computation.\\
+
+\begin{figure}[h]
+\centering
+\includegraphics[height=3cm,width=0.4\textwidth]{nn1.png}
+\caption{Neuron Network}
+\end{figure}
+
+\newpage
+
+Like biological neurons have \textit{synapse}, each artificial neuron has a  computation cell called activation function. The activation function will decides whether and how much the data can output to next neuron.Next figure is showing different types activation function.Unlike biological neurons, artificial neurons also have weights and biases.Before input to activation function all inputs should go through a transfer function unit.\\
+
+Transfer function:
+
+\[z= \sum\limits_{i}W_i X_i +b\]
+
+Activation function:
+	\[\phi(z)\]
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.9\textwidth]{activation.png}
+\caption{Different types activation}
+\end{figure}
+
+\newpage
+\subsection{Convolution Neural Network(CNN)}
+In image processing and computer vision field, the images are usually  represented as pixel vectors.For instance, there is a 1000 by 1000 image, so this image could be present as a 1000000-dimension vector.If the hidden layer has same number of neurons as input layer. Then the number of weights should equels 1000000*1000000=$10^{12}$. $10^{12}$ weight is too many to be trained.In other words, it is  impossible for hardware to process so many parameters.In order to process images in neural network, we have to reduce parameters.
+\subsubsection{Local Connectivity}
+In general, The spatial connection of the image is also the local pixel contact is more closely, and the distant pixel correlation is weak.Thus, each neuron is not necessary to perceive the global image, only need to perceive the local, and then at the higher level will be part of the information together to get the overall information.As the instance we mentioned before, assume each neuron only connects to 10*10 neurons, then paremeters will reduce from $10^{12}$ to $10^8$.In fact, it is equivalent to convolution operation.
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.9\textwidth]{localconnect.png}
+\caption{Fully connected and local connected network}
+\end{figure}
+\subsubsection{Parameters Sharing}
+However,$10^8$ parameters is still too large for a neural network.The other power weapon to reduce parameters is parameter sharing.In the above local connected instance, each neuron corresponds to 100 parameters, there are a total of 1000000 neurons.If  all the 1000000 neurons have the same 100 parameters, then the number of parameters reduce to 100.\\
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.9\textwidth]{parameter.png}
+\caption{Multiple convolution kernels}
+\end{figure}
+To understand the weight of sharing better, we consider these 100 parameters (that is, convolution operations) as a way of extracting features that are independent of position. The implication of this is that the statistical properties of a part of the image are the same as those of the other parts. This also means that the features we learn in this part can also be used on another part, so we can use the same learning feature for all the positions on the image.Normally, one feature is not enough for an image, so it is better to use multiple kernel to learn multiple features.
+\subsubsection{Convolution Layer}
+convolution layer is the core layer of a convolutional neural network, which compute dot product between the filters and the input data. In image processing, input data usually has three dimension, width, height and depth. The convolution kernel depth has to match input volume	depth.In other words, the number of channels have to be same.	Next figure is showing a practical example of what convolution does.	
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.9\textwidth]{conv.png}
+\caption{Convolution}
+\end{figure}
+
+In general, if a convolution layer with:
+\begin{itemize}
+\item Input vulome with size $W_1\times H_1\times D_1$
+\item Number of kernels K
+\item Zero padding width P:the gray cell with value 0 in fugure 5, zero padding is only for controling of output shape.
+\item The stride S:step size of sliding kernel.
+\item Kernel size F
+\end{itemize}
+
+Produce a volume of size $W_2 \times H_2 \times D_2$ where:
+\begin{itemize}
+\item $W_2=(W_1-F+2P)/S+1$
+\item $H_2=(H_1-F+2P)/S+1$
+\item $D_2=K$
+\end{itemize}
+
+The input volume size is 5x5x3,zero padding size 2, with two 3x3x3 kernels.
+\begin{itemize}
+\item $W_2=(5-3+2 \times 1)/2+1=3$
+\item $H_2=(5-3+2 \times 1)/2+1=3$
+\item $D_2=2$
+\end{itemize}
+With the equation we can easily compute output volume shape 3x3x2.
+
+\newpage
+\subsubsection{Pooling Layer}
+After convolution layer, the next step is to use these features to do the classification jobs. Theoretically, we can use all the extracted features to train the classifier, such as the softmax classifier, but this is facing with the challenge of calculating the amounts of computation and overfitting.A pooling layer is usually followed a convolution layer to control overfitting and spatial size of data.The most common form is a pooling layer with 2x2 size kernels which match the depth to input volume.At most of time, the kernel with a stride of 2.Assume a Max poling is applied, that means the operation will pick the maximum value from every possible  2x2 region.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.9\textwidth]{pooling.png}
+\caption{Pooling operation}
+\end{figure}
+In summary, a pooling layer with:
+\begin{itemize} 
+\item input volume $W_1 \times H_1 \times D_1$
+\item filter size F
+\item stride S
+
+Produces an output volume$W_2 \times H_2 \times D_2$, where:
+\item $W_2=(W_1-F)/S+1$
+\item $H_2=(H_1-F)/S+1$
+\item $D_2=D_1$
+\end{itemize}
+
+\newpage
+
+\subsubsection{Some Popular CNN Architectures}
+\begin{itemize}
+\item \textbf{LeNet:} First successful CNN Architecture which developed by Yann LeCun in 90s.
+\item \textbf{AlexNet:} AlexNet was developed by Alex Krizhevsky, Ilya Sutskever and Geoff Hinton. The AlexNet achieved second runner-up in ImageNet ILSVRC challenge in 2012.It was  very similar to LeNet, but bigger and deeper than it.
+\item \textbf{ZFNet:} ZFNet was a provement version of AlexNet which came from Matthew Zeiler and Rob Fergus.The CNN architecture also made  them winner in ILSVRC 2013.Compare to AlexNet, ZFNet has bigger size of middle convolution kernel and smaller stride.
+\item \textbf{GoogleNet:}  Szegedy et al was the author of GooleNet, and he also won the ILSVRC 2014.GoogleNet reduce a large amount of  parameters from 60M to 4M(compared to AlexNet).
+\item \textbf{VGGNet:}
+\end{itemize}
+
+\newpage
+\section{Requirements Specification}
 \section{Design}
 \section{Implementation and Testing}
 \section{Evaluation}
 \section{Appraisal}
 \section{Summary and Conclusion}
-\section{Recommendation for future work}
+\section{Recommendation for Future Work}
 \end{document}
