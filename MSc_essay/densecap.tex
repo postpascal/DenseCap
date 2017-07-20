@@ -160,6 +160,55 @@ Activation function:
 \end{figure}
 
 \newpage
+
+A neural network is not enough to do some real jobs, it only contains initialized parameters.To make it works, we need to train the neural network.Error backpropogation is a powerful weapen in almost all the real life jobs.A training iteration consists two parts, forward propagation and backward propagation(BP). As we mentioned, forward network pass  data from input layer until output layer, while backward pass error from output layer back to input layer.Before we dig deeper in BP, a loss function should be defined in advance. The loss function is a tool to evaluate  the difference (Error) between the output and the target output.In general, all the neural network jobs are always around the error.The goal is to minimize the error, to optimize the network parameters.A practical example is belowing to help understand Backpropagation and Gradient decent.
+
+\textbf{Example for Backpropagation:}
+Assume that every day you have lunch at the cafeteria, you diet only consists of fish , chips, and ketchup. The cashier only tells you the total price of the meal. A few days later, you should be able to figure out the single price of each food.
+
+Assume price of means is 850, and use linear activation function and squared error function in this example.\\
+Target Price: 850\\
+Portions of fish: 2\\
+Portions of chips: 5\\
+Portions of ketchups:3\\
+\[Price=X_{fish} W_{fish}+X_{chips}W_{chips}+X_{ketchup}W_{ketchup}\]
+First we star with random guess the prices:
+\[W_{fish}=W_{chips}=W_{ketchup}=50\]
+$So,price=2\times 50+5\times 50+3\times 50=500$
+\[E=\frac{1}{2} \sum\limits_{n\in training}(t^n-y^n)^2\]
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.5\textwidth]{bp.png}
+\caption{BP example }
+\end{figure}
+\newpage
+Where:
+$t$ is target price,$y$ is output price, $\varepsilon$ is learning rate(assume 1/35).
+\[\frac{\partial{E}}{\partial{w_i}}=\frac{1}{2}\sum\limits_n\frac{\partial{y^n}}{\partial{w_i}}\frac{d{E^n}}{d{y^n}} =-\sum\limits_n x_i^n(t^n-y^n)\]
+
+\[\Delta w_i=-\varepsilon\frac{\partial E}{\partial w_i}=\sum\limits_n \varepsilon x_i^n(t^n-y^n)\]
+In this case n=1.\\
+Thus $ \Delta w_i =\frac{1}{35}x_i(850-500)$\\
+
+$\Delta w_{fish}=20,\Delta w_{chips}=50,\Delta w_{ketchup}=30$   \\
+
+Update to\\
+
+$w_{fish}=70,w_{chips}=100,w_{ketchup}=80$  \\
+
+$ Price=2\times 70+5\times 100+3\times 80=880$\\
+ 
+One more iteration\\
+
+$\Delta w_{fish}=-1.7,\Delta w_{chips}=-4.3,\Delta w_{ketchup}=-2.6$   \\
+
+Update to\\
+
+$w_{fish}=68.3,w_{chips}=95.7,w_{ketchup}=77.4$  \\
+
+$price=2\times 68+5\times 95.7+3\times 77.4=847.3$\\
+As the above computation  shows, total price is 500 , 880 then 847.3.With enough iterations, there is no doubt the total price will converge to 850, the target output.
 \subsection{Convolution Neural Network(CNN)}
 In image processing and computer vision field, the images are usually  represented as pixel vectors.For instance, there is a 1000 by 1000 image, so this image could be present as a 1000000-dimension vector.If the hidden layer has same number of neurons as input layer. Then the number of weights should equels 1000000*1000000=$10^{12}$. $10^{12}$ weight is too many to be trained.In other words, it is  impossible for hardware to process so many parameters.In order to process images in neural network, we have to reduce parameters.
 \subsubsection{Local Connectivity}
@@ -173,7 +222,7 @@ In general, The spatial connection of the image is also the local pixel contact 
 However,$10^8$ parameters is still too large for a neural network.The other power weapon to reduce parameters is parameter sharing.In the above local connected instance, each neuron corresponds to 100 parameters, there are a total of 1000000 neurons.If  all the 1000000 neurons have the same 100 parameters, then the number of parameters reduce to 100.\\
 \begin{figure}[h]
 \centering
-\includegraphics[width=0.9\textwidth]{parameter.png}
+\includegraphics[height=4cm,width=0.9\textwidth]{parameter.png}
 \caption{Multiple convolution kernels}
 \end{figure}
 To understand the weight of sharing better, we consider these 100 parameters (that is, convolution operations) as a way of extracting features that are independent of position. The implication of this is that the statistical properties of a part of the image are the same as those of the other parts. This also means that the features we learn in this part can also be used on another part, so we can use the same learning feature for all the positions on the image.Normally, one feature is not enough for an image, so it is better to use multiple kernel to learn multiple features.
@@ -235,12 +284,28 @@ Produces an output volume$W_2 \times H_2 \times D_2$, where:
 \subsubsection{Some Popular CNN Architectures}
 \begin{itemize}
 \item \textbf{LeNet:} First successful CNN Architecture which developed by Yann LeCun in 90s.
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.8\textwidth]{lenet.png}
+\caption{LeNet Architecture}
+\end{figure}
 \item \textbf{AlexNet:} AlexNet was developed by Alex Krizhevsky, Ilya Sutskever and Geoff Hinton. The AlexNet achieved second runner-up in ImageNet ILSVRC challenge in 2012.It was  very similar to LeNet, but bigger and deeper than it.
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.8\textwidth]{alexnet.png}
+\caption{AlexNet Architecture}
+\end{figure}
 \item \textbf{ZFNet:} ZFNet was a provement version of AlexNet which came from Matthew Zeiler and Rob Fergus.The CNN architecture also made  them winner in ILSVRC 2013.Compare to AlexNet, ZFNet has bigger size of middle convolution kernel and smaller stride.
 \item \textbf{GoogleNet:}  Szegedy et al was the author of GooleNet, and he also won the ILSVRC 2014.GoogleNet reduce a large amount of  parameters from 60M to 4M(compared to AlexNet).
-\item \textbf{VGGNet:}
-\end{itemize}
+\item \textbf{VGGNet:}VGGNet was runner-up in ILSVRC 2014 which came from Karen Simonyan and Andrew Zisserman.The VGGNet proved that deeper neural network not always have better perfermance.On the other side VGGNet cost a lot of memory for parameters(14M).In this project we use VGG-16 which composed of 13 convolution layers and 3  fully connected layers.
 
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.9\textwidth]{vgg16.png}
+\caption{VGG-16 Architecture}
+\end{figure}
+
+\end{itemize}
 \newpage
 \section{Requirements Specification}
 \section{Design}
