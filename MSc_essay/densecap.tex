@@ -20,6 +20,20 @@
 \definecolor{codepurple}{rgb}{0.58,0,0.82}
 \definecolor{backcolour}{rgb}{0.95,0.95,0.92}
  
+ 
+ 
+ \newcommand{\namesigdate}[2][5cm]{%
+  \begin{tabular}{@{}p{#1}@{}}
+    #2 \\[2\normalbaselineskip] \hrule \\[0pt]
+    {\small \textit{Signature}} \\[2\normalbaselineskip] \hrule \\[0pt]
+    {\small \textit{Date}}
+  \end{tabular}
+}
+ 
+ 
+ 
+ 
+ 
 \lstdefinestyle{mystyle}{
     backgroundcolor=\color{backcolour},   
     commentstyle=\color{codegreen},
@@ -91,13 +105,17 @@ Dr. Jianguo \textsc{Zhang}
 \begin{center}
 {\huge Executive Summary}
 \end{center}
-fadghndhbtsrgsdfhdshs
+This project refers to Justin Johnson\textsc{\char13}s paper 'DenseCap: Fully Convolutional Localization Networks for Dense Captioning '.This project is based on Convolutional Neural Network(CNN) and Recurrent Neural Network(RNN).The aim of this project is to automatically generate natual language for each salient region accourding to given images.The nerual network model is composed of a Convolutional Neural Network to extract image features, a Fully Convolutional Localization Network to detect objects and a recurrent neural network to general natural language.I evaluate the  network on the subset of Visual Genome dataset,5000 images for testing, 5000 images for evaluateing, and around 40000 images for training.To train the neural network model fast and well, a deep learning framework  Torch and a Titan GPU server were used.
 \newpage
 
 \begin{center}
 {\huge Declaration}
 \end{center}
-I declare that the special study described in this dissertation has been carried out and the dissertation composed by me, and that the dissertation has not been accepted in fulfilment of the requirements of any other degree or professional qualification.
+I declare that the special study described in this dissertation has been carried out and the dissertation composed by me, and that the dissertation has not been accepted in fulfilment of the requirements of any other degree or professional qualification.\\
+
+\vspace{3cm}
+
+\noindent \namesigdate{Name:Keke Zhang}
 \newpage
 
 
@@ -105,6 +123,13 @@ I declare that the special study described in this dissertation has been carried
 {\huge Certificate}
 \end{center}
 I certify that Keke Zhang has satisfied the conditions of the Ordinance and Regulations and is qualified to submit this dissertation in application for the degree of Master of Science.
+
+
+\vspace{3cm}
+
+\noindent \namesigdate{Name:Dr. Jianguo Zhang}
+\newpage
+
 \newpage
 
 \begin{center}
@@ -120,6 +145,12 @@ Last but not least, I would like to thank my parents and friends for their conti
 \newpage
 \pagenumbering{arabic}
 \section{Introduction}
+\subsubsection{Machine Learning}
+Machine learning and deep learning has became  more and more popular since the revoluation of dardware.With the development of computation units, for instance GPU (graphics processing unit) and CPU (central processing unit), complicated algorithm and large mounts of computation are  possible.On the other hand, deep learning require huge mounts of traingin data. Nowadays, varieties of web media like Facebook and Youtube make  petabytes of data everyday.This meet the  condition of data volume.Machine learning is a subject that help model   learn exprience. After that, we can use the trained model to predict and make dicisions.
+
+Machine learning could be used in different types of data, images, videos, text, sound et al. In 2017, AlphaGo has won all the three matchs with Ke Jie who was top 1 among all human  go players worldwide.The vectory of AlphaGo not only shows the power of machine learning and also a beautiful future.Machine learning also achieve great success in other field, for instance object detection, speech recognition, face recognition, self-driving et al.
+\subsubsection{Revelvent research}
+\newpage
 \section{Background}
 \subsection{Artificial Neural Network}
 Artificial neural network is inspired by biological neuron that has input and output.Normally, a typical biological neuron collects  signals in \textit{dentrites} and send out the signal through \textit{axon}.There is a structure called \textit{synapse} between neurons, it decides whether the signal will pass \textit{synapse} and arrive next neuron.
@@ -299,6 +330,8 @@ Produces an output volume$W_2 \times H_2 \times D_2$, where:
 \item \textbf{GoogleNet:}  Szegedy et al was the author of GooleNet, and he also won the ILSVRC 2014.GoogleNet reduce a large amount of  parameters from 60M to 4M(compared to AlexNet).
 \item \textbf{VGGNet:}VGGNet was runner-up in ILSVRC 2014 which came from Karen Simonyan and Andrew Zisserman.The VGGNet proved that deeper neural network not always have better perfermance.On the other side VGGNet cost a lot of memory for parameters(14M).In this project we use VGG-16 which composed of 13 convolution layers and 3  fully connected layers.
 
+
+
 \begin{figure}[h]
 \centering
 \includegraphics[width=0.9\textwidth]{vgg16.png}
@@ -307,8 +340,211 @@ Produces an output volume$W_2 \times H_2 \times D_2$, where:
 
 \end{itemize}
 \newpage
+\subsection{Recurrent Neural Network(RNN)}
+
+
+
 \section{Requirements Specification}
+
 \section{Design}
+
+\subsection{Platform and dependences}
+This project is running on Torch, it is a open source deep learning framework which can build network architecture and train it. It is also a script language based on Lua programming language.It is efficient and easy to use, except it lacks Python Interface.So in this project, some data exchange between Lua script and Python script is on JSON forma.Torch7 is the version using in this project, but Torch is not the only one library.It also requires some other libraries for neural networks, images and GPU computation.
+
+\begin{itemize}
+\item nn
+\item nngraph
+\item image
+\item lua-cjson
+\item stnbhwd
+\item torch-rnn
+\end{itemize}
+All these common dependences can be easily install by Luarocks.However, network training is very slow in only CPU model, especially for large dataset.To train the network faster,GPU accelerate is a popular strategy.In that case a NVIDIA GPU and CUDA library  are necessary.Then, you will also need  install several libraries on Torch.
+\begin{itemize}
+\item cutorch
+\item cunn
+\item cudnn
+\end{itemize}
+As we mentioned before, Python script  is necessary as well. Python language is foucuing on dataset processing in this project, including editing region relationship JSON file, objects and words extracting, combining images and JSON file into HDF5 format.I am using python 2.7 through all this project and some python modules is also require as well.
+\begin{itemize}
+\item numpy
+\item scipy
+\item pillow
+\item h5py
+\item json
+\item random
+\item pprint
+\end{itemize}
+\subsection{Dataset}
+This image dataset I am using is Visual Genome Dataset, it contains around 94,000 images and 4,100,000 regions-grounded captions.The whole dataset is too large for my project, i only use a subset of it.The subset dataset is comprises 5000 images for testing, another 5000 images for evaluating, and 40000 images for trining.
+This dataset is not only images, it also contains some JSON files which help to allocate objects' coordinate axis, describe regions and objects.Next figure showing image examples and JSON file examples in from the dataset.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.8\textwidth]{2356274.jpg}
+\caption{Imges Example}
+
+\end{figure}
+\newpage
+
+\begin{figure}[h]
+\begin{subfigure}{0.5\linewidth}
+	\includegraphics[height=5.5cm,width=\textwidth]{object.png}
+	\caption{Object Example}
+\end{subfigure}
+\begin{subfigure}{0.5\linewidth}
+	\includegraphics[height=5.5cm,width=\textwidth]{region.png}
+	\caption{Region Description Example}
+\end{subfigure}
+\label{dataset example}
+\caption{JSON File Example}
+\end{figure}
+
+As for vocabulary dataset, it comes from University of Aberdeen.Thanks to Professor Annalu Waller and Christopher Norrie, they have chosen the most valuable 166  words for this project. All these 166 words form the whole vocabulary.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.2\textwidth]{vocab.png}
+\caption{Vocabulary Example}
+\end{figure}
+
+Neural networks can not read images and vocabulary directly, all data must convert to HDF5 format.First of all, remove all images which their region phrase do not included in vocabulary list.Then randomly assign these images into train set, test set and evaluate set.(5000 images in test set and 5000 images in evaluate set, others remain to training set.)
+\subsection{TO BE continue}
+
+
+\newpage
+\subsection{Networks}
+\subsubsection{VGG-16}
+The whole project composed of three main neural networks,VGG-16(Convoluational Neural Network), Object detection and Recognition Network  and Recurrent Neural Network language model.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.9\textwidth]{network.png}
+\caption{Main networks}
+\end{figure}
+At the begining of the neural network, a VGG-16 was used to extract features.And this VGG-16 has been pretrained by ImageNet.\\
+
+(NEED TO ADD VGG details)\\
+As we mentioned before, The VGG-16 architecture composed of 13 layers of  3$\times $3 convolution kernels and 5 layers of 2$\times$2 max pooling kernels.In this project we only remain the first four max pooling layers.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.9\textwidth]{vgg162.png}
+\caption{VGG-16 Architecture}
+\end{figure}
+
+Assume that we feed the network a images size of 3$\times$224$\times$224. \\
+In summary :
+\begin{itemize}
+\item input volume 3$\times$224$\times$224
+\item filter size 3$\times$3
+\item stride 1
+\item zero padding 1
+\end{itemize}
+
+width=(224 - 3+2$\times$1)/1+1=224, height=(224 - 3+2$\times$1)/1+1=224\\
+So for each time the image go through convolution layer width and height remains the same. As for pooling layer, each 2$\times$2 pooling will reduce the tensor size to a half.We have 4 layers of max pooling, so $width=224/2^4=14$,$height=224/2^4=14$.In a word, the VGG-16 will convert a 3$\times$224$\times$224 RGB image to a 512$\times$14$\times$14 tensor.(We use 512 kernels in last convolution layer).The output of this VGG-16 neural network will feed to region proposal network(RPN) in next main neural network.
+\subsubsection{Fully Convolutional Localization Network(FCLN)}
+A Region Proposal Network(RPN) takes feature maps as input from last networks(In my case it is VGG-16 as we mentioned before) and outputs a set of proposal regions which has been marked with  scores.
+To general region proposals, we use a sliding-window through the convolutional feature maps.Each sliding-window can general k anchors.We use 3 scales and 3 aspect ratios for each sliding-window, so $k=3\times 3=9$.And all these 9 anchors are centered at the same sliding-window.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.9\textwidth]{sliding.png}
+\caption{Generating anchors}
+\end{figure}
+
+For each of these k anchors, we predict a score and four scalar regressing from anchor to region coordinates.
+To do these, we feed our feature map to a $3\times 3$ convolution with 256 kernels, then through  a rectified linear nonlinearity, and a $1\times 1$ convolution with 5k kernels.The output is a $5k\times W'\times H'$ tensor which contains  all scores and scalars regresses.
+\newpage
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.9\textwidth]{computeanchors.png}
+\caption{Coompute anchors}
+\end{figure}
+
+Given an anchor with center $(x_a,y_a)$, width $w_a$,height $h_a$, scalas as we computed before$(t_x,t_y,t_w,t_h)$will project anchor coordinates to original region coordinates.
+\[x=x_a+t_xw_a\]
+\[y=y_a+t_yh_a\]
+\[w=w_aexp(t_w)\]
+\[h=h_aexp(t_h)\]
+
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.5\textwidth]{iou.png}
+\caption{Intersection over Union}
+\end{figure}
+Using the same instance we mentioned before, given the input image size is $224\times 224 \times 3$, feed the image to VGG-16, the output feature map size is $14\times 14\times 512$.Assume k=16.\[14\times 14\times 16\times 5=15680\] It is too expensive to train the RNN based on so many region proposals.So at training time, we sample B($B=256$) anchors as a minibatch, the minibatch contains less than B/2 positive anchors and the rest negatives.Before we sample regions, we should define negative and positive anchors.In this case ,we use Intersection over Union(IoU) to evaluate the similarity between anchorsand ground truth regions. IoU can be simple computed as the figure showing.
+
+ Normally, a anchor is positive if$(i)$ it has an intersection over union(IoU) over 0.7 with all the ground truth region,or$(ii)$ ,it has the highest intersection over onion with a ground truth region.A anchors is negative if its IoU is lower than 0.3 with all the ground truth region. In training time,B region proposals were sampled uniformly  without replacement from negative bin and positive bin respectively.In testing time, anchors can be labeled as no ground truth provieded. So we use greedy non-maximum suppression(NMS) and confident score of regions to sample $B$ best region proposals.
+ 
+ 
+After  sampling, we get a tensor of size $B\times 4$ which refer to a set of  region proposals with varying sizes.To communicate with next layer neural networks (Recurrent Neural Network), we have to convert the unfixed regions to fixed size features.In this case, the approach we are using is Bilinear Interpolation.Given a feature map $U$ of shape $C\times W'\times H'$ (in our instance is $512\times 14\times 14$) and sampled region proposals of shape $B\times 4$.By interpolating the feature map $U$ and refering to region proposals$(B\times 4)$, we generate a new feature map $V$ of shape $B\times C\times X\times Y$. \\
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.8\textwidth]{transform.png}
+\caption{Spatial Transformer}
+\end{figure}
+
+
+Concretely, before we compute a sampling grid $G$, we should project the region proposals onto feature map $U$.
+Samping grid can be computed by:\\
+\[ 
+\left (
+  \begin{tabular}{ccc}
+  $x_i^s$ \\
+  $y _i^s$
+  \end{tabular}
+\right ) =T_{\theta}(G_i)=A_{\theta}
+\left (
+  \begin{tabular}{ccc}
+  $x_i^t$ \\
+  $y _i^t$ \\
+  1
+  \end{tabular}
+\right )=
+\left [
+  \begin{tabular}{ccc}
+  $\theta_{11}$ &  $\theta_{12}$ &   $\theta_{13}$  \\
+   $\theta_{21}$ &  $\theta_{22}$ &   $\theta_{23}$ 
+
+  \end{tabular}
+\right ] 
+\left (
+  \begin{tabular}{ccc}
+  $x_i^t$ \\
+  $y _i^t$ \\
+  1
+  \end{tabular}
+\right )
+\]
+$$G=\{G_i\},G_i=(x_i^t,y_i^t)$$
+
+Where $(x_i^s,y_i^s)$ are source coordinates of input feature map $U$, $(x_i^t,y_i^t)$ are target coordinates of output feature $V$.The two coordiantes $(x_i^s,y_i^s)$ and $(x_i^t,y_i^t)$ refer to the same pxiel, but in different tensors.To compute output tensor, we normally with a sampling kernel $k$.
+\[V_i=\sum\limits_{m=1}^W\sum\limits_{n=1}^HU_{m,n}^c k(m-x_i^s)(n-y_i^s)\]
+The height and width are normalized, so $-1<x_i^t,y_i^t<1$ and $-1<x_i^s,y_i^s<1$ . A bilinear sampler was used, which means $k$ refer to:
+$$k(d)=max(0,1-|d|)$$\\
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.8\textwidth]{bilinear2.png}
+\caption{Bilinear Sampler}
+\end{figure}
+
+In summary, the Fully Convolutional Localization Network uses  shared  Conv features, The Conv features input to Region Proposal Network, then sampling B best region proposals and generate sampling grid.The same conv features input to bilinear sampler with sampling grid that give rise to  fixed-size region features.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.9\textwidth]{rpn.png}
+\caption{Region Proposal and Localization Network}
+\end{figure}
+
+The region features will input to a recognition neural network which is composed of  two fully connected  layers.The two fully connected layers using RELU as activation and regularized by dropout.Each region feature will convert to a vector then through the recognition network, after that it prodeces a 4096 dimension vector. 
+\subsubsection{Recurrent Neural Network Languge Model}
+
+
+
+\subsection{Web Interface}
 \section{Implementation and Testing}
 \section{Evaluation}
 \section{Appraisal}
