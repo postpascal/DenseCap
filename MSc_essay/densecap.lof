@@ -1,0 +1,27 @@
+\select@language {english}
+\contentsline {figure}{\numberline {1}{\ignorespaces Biological Neuron and Artificial Neuron\relax }}{2}
+\contentsline {figure}{\numberline {2}{\ignorespaces Neuron Network\relax }}{2}
+\contentsline {figure}{\numberline {3}{\ignorespaces Different types activation\relax }}{3}
+\contentsline {figure}{\numberline {4}{\ignorespaces BP example \relax }}{5}
+\contentsline {figure}{\numberline {5}{\ignorespaces Fully connected and local connected network\relax }}{6}
+\contentsline {figure}{\numberline {6}{\ignorespaces Multiple convolution kernels\relax }}{7}
+\contentsline {figure}{\numberline {7}{\ignorespaces Convolution\relax }}{8}
+\contentsline {figure}{\numberline {8}{\ignorespaces Pooling operation\relax }}{9}
+\contentsline {figure}{\numberline {9}{\ignorespaces LeNet Architecture\relax }}{10}
+\contentsline {figure}{\numberline {10}{\ignorespaces AlexNet Architecture\relax }}{10}
+\contentsline {figure}{\numberline {11}{\ignorespaces VGG-16 Architecture\relax }}{11}
+\contentsline {figure}{\numberline {12}{\ignorespaces Recurrent Neural Network\relax }}{11}
+\contentsline {figure}{\numberline {13}{\ignorespaces Main networks\relax }}{13}
+\contentsline {figure}{\numberline {14}{\ignorespaces VGG-16 Architecture\relax }}{14}
+\contentsline {figure}{\numberline {15}{\ignorespaces Generating anchors\relax }}{15}
+\contentsline {figure}{\numberline {16}{\ignorespaces Coompute anchors\relax }}{15}
+\contentsline {figure}{\numberline {17}{\ignorespaces Intersection over Union\relax }}{16}
+\contentsline {figure}{\numberline {18}{\ignorespaces Spatial Transformer\relax }}{17}
+\contentsline {figure}{\numberline {19}{\ignorespaces Bilinear Sampler\relax }}{18}
+\contentsline {figure}{\numberline {20}{\ignorespaces Region Proposal and Localization Network\relax }}{18}
+\contentsline {figure}{\numberline {21}{\ignorespaces Region Proposal and Localization Network\relax }}{19}
+\contentsline {figure}{\numberline {22}{\ignorespaces Imges Example\relax }}{20}
+\contentsline {figure}{\numberline {23}{\ignorespaces JSON File Example\relax }}{21}
+\contentsline {figure}{\numberline {24}{\ignorespaces Vocabulary Example\relax }}{21}
+\contentsline {figure}{\numberline {25}{\ignorespaces Region Preprocessing\relax }}{22}
+\contentsline {figure}{\numberline {26}{\ignorespaces Object Preprocessing\relax }}{23}

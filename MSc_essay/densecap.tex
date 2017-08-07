@@ -9,6 +9,7 @@
 \usepackage{listings}
 \usepackage{color}
 \usepackage{comment}
+\usepackage{dsfont}
 \usepackage{pdfpages}
 \usepackage{natbib}
 \usepackage{booktabs}
@@ -101,6 +102,7 @@ Dr. Jianguo \textsc{Zhang}
 
 \end{titlepage}
 \newpage
+\newpage\null\thispagestyle{empty}\newpage
 \pagenumbering{roman}
 \begin{center}
 {\huge Executive Summary}
@@ -108,6 +110,7 @@ Dr. Jianguo \textsc{Zhang}
 This project refers to Justin Johnson\textsc{\char13}s paper 'DenseCap: Fully Convolutional Localization Networks for Dense Captioning '.This project is based on Convolutional Neural Network(CNN) and Recurrent Neural Network(RNN).The aim of this project is to automatically generate natual language for each salient region accourding to given images.The nerual network model is composed of a Convolutional Neural Network to extract image features, a Fully Convolutional Localization Network to detect objects and a recurrent neural network to general natural language.I evaluate the  network on the subset of Visual Genome dataset,5000 images for testing, 5000 images for evaluateing, and around 40000 images for training.To train the neural network model fast and well, a deep learning framework  Torch and a Titan GPU server were used.
 \newpage
 
+\newpage\null\thispagestyle{empty}\newpage
 \begin{center}
 {\huge Declaration}
 \end{center}
@@ -117,7 +120,7 @@ I declare that the special study described in this dissertation has been carried
 
 \noindent \namesigdate{Name:Keke Zhang}
 \newpage
-
+\newpage\null\thispagestyle{empty}\newpage
 
 \begin{center}
 {\huge Certificate}
@@ -131,6 +134,7 @@ I certify that Keke Zhang has satisfied the conditions of the Ordinance and Regu
 \newpage
 
 \newpage
+\newpage\null\thispagestyle{empty}\newpage
 
 \begin{center}
 {\huge Acknowledgements}
@@ -141,8 +145,26 @@ I would also like to thank Professor Annalu Waller and Christopher Norrie for pr
 \\
 Last but not least, I would like to thank my parents and friends for their continuous support and understanding.
 
+\newpage\null\thispagestyle{empty}\newpage
+\newpage
+
+\tableofcontents
+\newpage
+
+\newpage\null\thispagestyle{empty}\newpage
+\newpage
+
+\begin{appendix}
+  \listoffigures
+
+\end{appendix}
 
 \newpage
+\newpage\null\thispagestyle{empty}\newpage
+\begin{appendix}
+  \listoftables
+\end{appendix}
+\newpage\null\thispagestyle{empty}\newpage
 \pagenumbering{arabic}
 \section{Introduction}
 \subsubsection{Machine Learning}
@@ -339,11 +361,17 @@ Produces an output volume$W_2 \times H_2 \times D_2$, where:
 \end{figure}
 
 \end{itemize}
-\newpage
 \subsection{Recurrent Neural Network(RNN)}
+Unlike Convolutional Neural Network, Recurrent Neural Network is archithcture is much simpler.RNN is very good at processing sequence data, such as videos, sentence,speech. It takes  $x_t$ and context $s_{t-1}$  as input , and preduce output  $o_t$ at each time step.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.9\textwidth]{rnn1.png}
+\caption{Recurrent Neural Network}
+\end{figure}
 
 
-
+\newpage
 \section{Requirements Specification}
 
 \section{Design}
@@ -375,44 +403,7 @@ As we mentioned before, Python script  is necessary as well. Python language is 
 \item random
 \item pprint
 \end{itemize}
-\subsection{Dataset}
-This image dataset I am using is Visual Genome Dataset, it contains around 94,000 images and 4,100,000 regions-grounded captions.The whole dataset is too large for my project, i only use a subset of it.The subset dataset is comprises 5000 images for testing, another 5000 images for evaluating, and 40000 images for trining.
-This dataset is not only images, it also contains some JSON files which help to allocate objects' coordinate axis, describe regions and objects.Next figure showing image examples and JSON file examples in from the dataset.
 
-\begin{figure}[h]
-\centering
-\includegraphics[width=0.8\textwidth]{2356274.jpg}
-\caption{Imges Example}
-
-\end{figure}
-\newpage
-
-\begin{figure}[h]
-\begin{subfigure}{0.5\linewidth}
-	\includegraphics[height=5.5cm,width=\textwidth]{object.png}
-	\caption{Object Example}
-\end{subfigure}
-\begin{subfigure}{0.5\linewidth}
-	\includegraphics[height=5.5cm,width=\textwidth]{region.png}
-	\caption{Region Description Example}
-\end{subfigure}
-\label{dataset example}
-\caption{JSON File Example}
-\end{figure}
-
-As for vocabulary dataset, it comes from University of Aberdeen.Thanks to Professor Annalu Waller and Christopher Norrie, they have chosen the most valuable 166  words for this project. All these 166 words form the whole vocabulary.
-
-\begin{figure}[h]
-\centering
-\includegraphics[width=0.2\textwidth]{vocab.png}
-\caption{Vocabulary Example}
-\end{figure}
-
-Neural networks can not read images and vocabulary directly, all data must convert to HDF5 format.First of all, remove all images which their region phrase do not included in vocabulary list.Then randomly assign these images into train set, test set and evaluate set.(5000 images in test set and 5000 images in evaluate set, others remain to training set.)
-\subsection{TO BE continue}
-
-
-\newpage
 \subsection{Networks}
 \subsubsection{VGG-16}
 The whole project composed of three main neural networks,VGG-16(Convoluational Neural Network), Object detection and Recognition Network  and Recurrent Neural Network language model.
@@ -539,13 +530,76 @@ In summary, the Fully Convolutional Localization Network uses  shared  Conv feat
 \caption{Region Proposal and Localization Network}
 \end{figure}
 
-The region features will input to a recognition neural network which is composed of  two fully connected  layers.The two fully connected layers using RELU as activation and regularized by dropout.Each region feature will convert to a vector then through the recognition network, after that it prodeces a 4096 dimension vector. 
+The region features will input to a recognition neural network which is composed of  two fully connected  layers.The two fully connected layers using RELU as activation and regularized by dropout.Each region feature will convert to a vector then through the recognition network, after that it prodeces a 4096 dimension vector. \\
+
 \subsubsection{Recurrent Neural Network Languge Model}
+To generate region description,we feed the output of FCLN to Recurrent Reural Network after code encoded.
 
-
+\[b_v=W_{hi}[CNN_\theta(I)]\]
+\[h_t=f(Ux_t+W_{hh}h_{t-1}+b_h+ \mathds{1}(t=1)\odot b_v)\] 
+\[y_t=softmax(Vh_t+b_o)\]
+Where $I$ is region pixels, $CNN_\theta$ is convolution layers it has through,and U ,$W_{hi},W_{hh}$and V are weights, $b_v$ and $b_o$ are biases.
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.8\textwidth]{rnnt.png}
+\caption{Region Proposal and Localization Network}
+\end{figure}
+In training time, given a sentence sequence $[s_1,s_2,s_3, , , ,s_T]$.Each element in this sequence is a single word , more exectly a token. We input convolution features at time steps $t=-1$, then we input a special START token at time step $t=0$.RNN will predict a most likely word from vocabulary. At time step $t=1$, we input $s_1$,as example showing in figure, it is a single word "black".For each time step, we continue inputing $s_2$ until $s_T$.In test time, we keep time step $(t=-1)$ and $(t=0)$ unchange, instead of feeding RNN tokens from sequence  $[s_1,s_2,s_3, , , ,s_T]$, we feed it the most likely token from vocabulary.The iteration will stop until a END token was generated.
 
 \subsection{Web Interface}
+\newpage
 \section{Implementation and Testing}
+
+\subsection{Dataset}
+Almost all the existing datasets contain only images or, image caption pairs, but none of them can provide both image region coordinates and region caption pairs.The dataset I am using is Visual Genome Dataset, it contains around 94,000 images and 4,100,000 regions-grounded captions.The dataset is made by Amazon workers on amazon mechanical turk.Amazon mechanical turk is a platform for workers get paid by doing some Human Intelligence Tasks which was  also lunched on this platform by some developers.
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.8\textwidth]{2356274.jpg}
+\caption{Imges Example}
+\end{figure}
+
+The whole dataset is too large for my project, I only use a subset of it.The subset dataset is comprises of  5000 images for testing, another 5000 images for evaluating, and 40000 images for trining.This dataset is not only images, but also contains some JSON files which help to locate objects' coordinate axis, describe regions and objects.
+
+\begin{figure}[h]
+\begin{subfigure}{0.5\linewidth}
+	\includegraphics[height=5.5cm,width=\textwidth]{object.png}
+	\caption{Object Example}
+\end{subfigure}
+\begin{subfigure}{0.5\linewidth}
+	\includegraphics[height=5.5cm,width=\textwidth]{region.png}
+	\caption{Region Description Example}
+\end{subfigure}
+\label{dataset example}
+\caption{JSON File Example}
+\end{figure}
+As figure showing,the left one is describing objects,images are saving in a Python list, each individual image is a dictionary which contains a unique images id a objects Python list.The objects list contains all objects' information in a same image.Objects information is on dictionary format, where x,y,w,h refer to x and y coordinates, width and height.Each region has a  name, a synset, and a unique object id.Similar to region description file, but region description using phrase for describing purpose instead of name or synsets.
+
+
+As for vocabulary dataset, it comes from University of Aberdeen.Thanks to Professor Annalu Waller and Christopher Norrie, they have chosen the most valuable 166  words for this project. All these 166 words form the whole vocabulary.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.2\textwidth]{vocab.png}
+\caption{Vocabulary Example}
+\end{figure}
+\subsection{Date Preprocessing}
+We are not planning to use the whole dataset as all objects should included in  the vocabulary.First of all we need to know which image is included in vocabulary, which is not.We extract all objects' name and its image ID  from objects.JSON  and write them to a JSON file by objects .If an object showing in  vocabulary, we will write its image ID to a splits file.So this splits JSON file contains all valid image ID which was seperated three parts, test set, training set and evaluation set.(5000 images in test set and 5000 images in evaluation set, 40000 images in training set.)
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.7\textwidth]{regionc.png}
+\caption{Region Preprocessing}
+\end{figure}
+
+Neural networks can not read images and vocabulary directly, all data must convert to HDF5 format.This job was done on Python script.The script takes the whole region description JSON file, splits JSON file and images as input and output a JSON file and a HDF5 database which we will feed to our neural network model.Region description file is well structured with clear phrase.So preprocessing is simple for region data,but not for objects data.As previous figure showing, objects' name and synsets  are on Python list structure which also contains some illegal characters, such as è, û, ™, ç ,dash, hyphen.To solve this problem I create a new key value pair  in objects file named 'obname' and save its clear name by replace illegal characters with space or english characters.
+
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.7\textwidth]{objectc.png}
+\caption{Object Preprocessing}
+\end{figure}
+
+\newpage
 \section{Evaluation}
 \section{Appraisal}
 \section{Summary and Conclusion}
