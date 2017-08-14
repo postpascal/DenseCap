@@ -2,6 +2,7 @@
 \usepackage{graphicx}
 \usepackage{subcaption}
 
+
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
 \usepackage{caption}
@@ -11,15 +12,17 @@
 \usepackage{comment}
 \usepackage{dsfont}
 \usepackage{pdfpages}
-\usepackage{natbib}
-\usepackage{booktabs}
+
+
+
+\usepackage[style=numeric,sorting=nty,firstinits=true,backend=bibtex]{biblatex}
+
+\addbibresource{sample}
+
 \usepackage[toc,page]{appendix}
 \usepackage{url}
 \usepackage{csvsimple,longtable,booktabs}
-\definecolor{codegreen}{rgb}{0,0.6,0}
-\definecolor{codegray}{rgb}{0.5,0.5,0.5}
-\definecolor{codepurple}{rgb}{0.58,0,0.82}
-\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
  
  
  
@@ -78,7 +81,7 @@
 \end{figure}
 
 \HRule \\[0.4cm]
-{ \huge \bfseries DenseCap}\\[0.4cm] % Title of your document
+{ \huge \bfseries Dense Object Detection}\\[0.4cm] % Title of your document
 \HRule \\[1.5cm]
  
 \begin{minipage}{0.4\textwidth}
@@ -102,15 +105,15 @@ Dr. Jianguo \textsc{Zhang}
 
 \end{titlepage}
 \newpage
-\newpage\null\thispagestyle{empty}\newpage
+
 \pagenumbering{roman}
 \begin{center}
 {\huge Executive Summary}
 \end{center}
-This project refers to Justin Johnson\textsc{\char13}s paper 'DenseCap: Fully Convolutional Localization Networks for Dense Captioning '.This project is based on Convolutional Neural Network(CNN) and Recurrent Neural Network(RNN).The aim of this project is to automatically generate natual language for each salient region accourding to given images.The nerual network model is composed of a Convolutional Neural Network to extract image features, a Fully Convolutional Localization Network to detect objects and a recurrent neural network to general natural language.I evaluate the  network on the subset of Visual Genome dataset,5000 images for testing, 5000 images for evaluateing, and around 40000 images for training.To train the neural network model fast and well, a deep learning framework  Torch and a Titan GPU server were used.
+This project refers to Justin Johnson\textsc{\char13}s paper 'DenseCap: Fully Convolutional Localization Networks for Dense Captioning '.This project is based on Convolutional Neural Network(CNN) and Recurrent Neural Network(RNN).The aim of this project is to automatically generate natural language for each salient region according to given images.The neural network model is composed of a Convolutional Neural Network to extract image features, a Fully Convolutional Localization Network to detect objects and a recurrent neural network to general natural language.I evaluate the network on the subset of Visual Genome dataset,5000 images for testing, 5000 images for evaluating, and around 40000 images for training.To train the neural network model fast and well, a deep learning framework  Torch and a Titan GPU server were used.
 \newpage
 
-\newpage\null\thispagestyle{empty}\newpage
+
 \begin{center}
 {\huge Declaration}
 \end{center}
@@ -120,7 +123,7 @@ I declare that the special study described in this dissertation has been carried
 
 \noindent \namesigdate{Name:Keke Zhang}
 \newpage
-\newpage\null\thispagestyle{empty}\newpage
+
 
 \begin{center}
 {\huge Certificate}
@@ -133,8 +136,6 @@ I certify that Keke Zhang has satisfied the conditions of the Ordinance and Regu
 \noindent \namesigdate{Name:Dr. Jianguo Zhang}
 \newpage
 
-\newpage
-\newpage\null\thispagestyle{empty}\newpage
 
 \begin{center}
 {\huge Acknowledgements}
@@ -145,14 +146,12 @@ I would also like to thank Professor Annalu Waller and Christopher Norrie for pr
 \\
 Last but not least, I would like to thank my parents and friends for their continuous support and understanding.
 
-\newpage\null\thispagestyle{empty}\newpage
+
 \newpage
 
 \tableofcontents
 \newpage
 
-\newpage\null\thispagestyle{empty}\newpage
-\newpage
 
 \begin{appendix}
   \listoffigures
@@ -160,22 +159,25 @@ Last but not least, I would like to thank my parents and friends for their conti
 \end{appendix}
 
 \newpage
-\newpage\null\thispagestyle{empty}\newpage
+
 \begin{appendix}
   \listoftables
 \end{appendix}
-\newpage\null\thispagestyle{empty}\newpage
+
+\newpage
 \pagenumbering{arabic}
 \section{Introduction}
 \subsubsection{Machine Learning}
-Machine learning and deep learning has became  more and more popular since the revoluation of dardware.With the development of computation units, for instance GPU (graphics processing unit) and CPU (central processing unit), complicated algorithm and large mounts of computation are  possible.On the other hand, deep learning require huge mounts of traingin data. Nowadays, varieties of web media like Facebook and Youtube make  petabytes of data everyday.This meet the  condition of data volume.Machine learning is a subject that help model   learn exprience. After that, we can use the trained model to predict and make dicisions.
+Machine learning and deep learning has become more and more popular since the revolution of hardware.With the development of computation units, for instance, GPU (graphics processing unit) and CPU (central processing unit), complicated algorithm and large mounts of computation are possible.On the other hand, deep learning requires huge mounts of training data. Nowadays, varieties of web media like Facebook and Youtube make petabytes of data every day.This meet the condition of data volume.Machine learning is a subject that help model learn experience. After that, we can use the trained model to predict and make decisions.
 
-Machine learning could be used in different types of data, images, videos, text, sound et al. In 2017, AlphaGo has won all the three matchs with Ke Jie who was top 1 among all human  go players worldwide.The vectory of AlphaGo not only shows the power of machine learning and also a beautiful future.Machine learning also achieve great success in other field, for instance object detection, speech recognition, face recognition, self-driving et al.
-\subsubsection{Revelvent research}
+Machine learning could be used in different types of data, images, videos, text, sound et al. In 2017, AlphaGo has won all the three matches with Ke Jie who was top 1 among all human go players worldwide.The victory of AlphaGo not only shows the power of machine learning and also a beautiful future.Machine learning also achieves great success in another field, for instance, object detection, speech recognition, face recognition, self-driving et al.
+\subsubsection{Revlated Work}
+This project draws on many research on object detection\cite{ob} and image captioning which based on deep networks.
+Most relate to my project is DenseCap\cite{densecap},Deep Visual-Semantic Alignment\cite{deepvisual}, Focal Loss for Dense Object Dection\cite{focalloss} and Faster R-cnn\cite{frcnn}.Dencap can generate natural sentence to describe each interested region and Faster R-CNN developed a Region Proposal Network(RPN) which help to locate objects coordinates.Similar but unlike the above two approach, I use RNN to classify objects, which generated by Region Proposal Network with Convolutional features.
 \newpage
 \section{Background}
 \subsection{Artificial Neural Network}
-Artificial neural network is inspired by biological neuron that has input and output.Normally, a typical biological neuron collects  signals in \textit{dentrites} and send out the signal through \textit{axon}.There is a structure called \textit{synapse} between neurons, it decides whether the signal will pass \textit{synapse} and arrive next neuron.
+Artificial neural network is inspired by the biological neuron that has input and output.Normally, a typical biological neuron collects  signals in \textit{dentrites} and send out the signal through \textit{axon}.There is a structure called \textit{synapse} between neurons, it decides whether the signal will pass \textit{synapse} and arrive next neuron.
 \begin{figure}[h]
 \begin{subfigure}{0.5\linewidth}
 	\includegraphics[height=3.5cm,width=\textwidth]{n1.png}
@@ -188,7 +190,9 @@ Artificial neural network is inspired by biological neuron that has input and ou
 \label{Biological Neuron and Artificial Neuron}
 \caption{Biological Neuron and Artificial Neuron}
 \end{figure}
-An artificial neuron is an information cell which can compute input with some special algorithm and output results.An artificial neural network is composed of hundreds or thousands of neurons.Each neuron gets input from last layer neurons and output to next neurons.The first layer is called input layer, the last layer is output layer, and all layers between the input layer and output layer are the hidden layer.Normally, we consider the Artificial neural network as a black box. It read data in the input layer and output result after amounts of computation.\\
+An artificial neuron is an information cell which can compute input with some special algorithm and output results.An artificial neural network is composed of hundreds or thousands of neurons.Each neuron gets input from last layer neurons and output to next neurons.The first layer is called input layer, the last layer is output layer, and all layers between the input layer and output layer are the hidden\cite{cnn}
+
+ layer.Normally, we consider the Artificial neural network as a black box. It read data in the input layer and output result after amounts of computation.\\ 
 
 \begin{figure}[h]
 \centering
@@ -214,7 +218,7 @@ Activation function:
 
 \newpage
 
-A neural network is not enough to do some real jobs, it only contains initialized parameters.To make it works, we need to train the neural network.Error backpropogation is a powerful weapen in almost all the real life jobs.A training iteration consists two parts, forward propagation and backward propagation(BP). As we mentioned, forward network pass  data from input layer until output layer, while backward pass error from output layer back to input layer.Before we dig deeper in BP, a loss function should be defined in advance. The loss function is a tool to evaluate  the difference (Error) between the output and the target output.In general, all the neural network jobs are always around the error.The goal is to minimize the error, to optimize the network parameters.A practical example is belowing to help understand Backpropagation and Gradient decent.
+A neural network is not enough to do some real jobs, it only contains initialized parameters.To make it works, we need to train the neural network.Error back propagation is a powerful weapon in almost all the real life jobs.A training iteration consists two parts, forward propagation and backward propagation(BP). As we mentioned, forward network pass data from input layer until output layer, while backward pass error from output layer back to the input layer.Before we dig deeper in BP, a loss function should be defined in advance. The loss function is a tool to evaluate the difference (Error) between the output and the target output.In general, all the neural network jobs are always around the error.The goal is to minimize the error, to optimize the network parameters.A practical example is below to help understand Backpropagation and Gradient decent.
 
 \textbf{Example for Backpropagation:}
 Assume that every day you have lunch at the cafeteria, you diet only consists of fish , chips, and ketchup. The cashier only tells you the total price of the meal. A few days later, you should be able to figure out the single price of each food.
@@ -262,25 +266,25 @@ $w_{fish}=68.3,w_{chips}=95.7,w_{ketchup}=77.4$  \\
 
 $price=2\times 68+5\times 95.7+3\times 77.4=847.3$\\
 As the above computation  shows, total price is 500 , 880 then 847.3.With enough iterations, there is no doubt the total price will converge to 850, the target output.
-\subsection{Convolution Neural Network(CNN)}
+\subsection{Convolution Neural Network(CNN)\cite{cnn}\cite{cnn1}\cite{cnn2}}
 In image processing and computer vision field, the images are usually  represented as pixel vectors.For instance, there is a 1000 by 1000 image, so this image could be present as a 1000000-dimension vector.If the hidden layer has same number of neurons as input layer. Then the number of weights should equels 1000000*1000000=$10^{12}$. $10^{12}$ weight is too many to be trained.In other words, it is  impossible for hardware to process so many parameters.In order to process images in neural network, we have to reduce parameters.
-\subsubsection{Local Connectivity}
+\subsubsection{Local Connectivity\cite{cnn2}}
 In general, The spatial connection of the image is also the local pixel contact is more closely, and the distant pixel correlation is weak.Thus, each neuron is not necessary to perceive the global image, only need to perceive the local, and then at the higher level will be part of the information together to get the overall information.As the instance we mentioned before, assume each neuron only connects to 10*10 neurons, then paremeters will reduce from $10^{12}$ to $10^8$.In fact, it is equivalent to convolution operation.
 \begin{figure}[h]
 \centering
 \includegraphics[width=0.9\textwidth]{localconnect.png}
-\caption{Fully connected and local connected network}
+\caption{Fully connected and local connected network\cite{cnn2}}
 \end{figure}
 \subsubsection{Parameters Sharing}
-However,$10^8$ parameters is still too large for a neural network.The other power weapon to reduce parameters is parameter sharing.In the above local connected instance, each neuron corresponds to 100 parameters, there are a total of 1000000 neurons.If  all the 1000000 neurons have the same 100 parameters, then the number of parameters reduce to 100.\\
+However,$10^8$ parameters is still too large for a neural network.\cite{cnn1}The other power weapon to reduce parameters is parameter sharing.In the above local connected instance, each neuron corresponds to 100 parameters, there are a total of 1000000 neurons.If  all the 1000000 neurons have the same 100 parameters, then the number of parameters reduce to 100.\\
 \begin{figure}[h]
 \centering
 \includegraphics[height=4cm,width=0.9\textwidth]{parameter.png}
-\caption{Multiple convolution kernels}
+\caption{Multiple convolution kernels\cite{cnn2}}
 \end{figure}
-To understand the weight of sharing better, we consider these 100 parameters (that is, convolution operations) as a way of extracting features that are independent of position. The implication of this is that the statistical properties of a part of the image are the same as those of the other parts. This also means that the features we learn in this part can also be used on another part, so we can use the same learning feature for all the positions on the image.Normally, one feature is not enough for an image, so it is better to use multiple kernel to learn multiple features.
-\subsubsection{Convolution Layer}
-convolution layer is the core layer of a convolutional neural network, which compute dot product between the filters and the input data. In image processing, input data usually has three dimension, width, height and depth. The convolution kernel depth has to match input volume	depth.In other words, the number of channels have to be same.	Next figure is showing a practical example of what convolution does.	
+To understand the weight of sharing better, we consider these 100 parameters (that is, convolution operations) as a way of extracting features that are independent of position. The implication of this is that the statistical properties of a part of the image are the same as those of the other parts. This also means that the features we learn in this part can also be used in another part, so we can use the same learning feature for all the positions on the image.Normally, one feature is not enough for an image, so it is better to use multiple kernels to learn multiple features.
+\subsubsection{Convolution Layer \cite{cnn}}
+convolution layer is the core layer of a convolutional neural network, which compute dot product between the filters and the input data. In image processing, input data usually has three dimensions, width, height, and depth. The convolution kernel depth has to match input volume depth.In other words, the number of channels has to be same.    Next figure is showing a practical example of what convolution does.	\cite{cnn}
 \begin{figure}[h]
 \centering
 \includegraphics[width=0.9\textwidth]{conv.png}
@@ -312,13 +316,12 @@ The input volume size is 5x5x3,zero padding size 2, with two 3x3x3 kernels.
 With the equation we can easily compute output volume shape 3x3x2.
 
 \newpage
-\subsubsection{Pooling Layer}
-After convolution layer, the next step is to use these features to do the classification jobs. Theoretically, we can use all the extracted features to train the classifier, such as the softmax classifier, but this is facing with the challenge of calculating the amounts of computation and overfitting.A pooling layer is usually followed a convolution layer to control overfitting and spatial size of data.The most common form is a pooling layer with 2x2 size kernels which match the depth to input volume.At most of time, the kernel with a stride of 2.Assume a Max poling is applied, that means the operation will pick the maximum value from every possible  2x2 region.
-
+\subsubsection{Pooling Layer \cite{cnn} }
+After convolution layer, the next step is to use these features to do the classification jobs. Theoretically, we can use all the extracted features to train the classifier, such as the softmax classifier, but this is facing the challenge of calculating the amounts of computation and overfitting.A pooling layer is usually followed a convolution layer to control overfitting and spatial size of data.The most common form is a pooling layer with 2x2 size kernels which match the depth to input volume.At most of the time, the kernel with a stride of 2.Assume a Max pooling is applied, that means the operation will pick the maximum value from every possible  2x2 region.
 \begin{figure}[h]
 \centering
 \includegraphics[width=0.9\textwidth]{pooling.png}
-\caption{Pooling operation}
+\caption{Pooling operation\cite{cnn}}
 \end{figure}
 In summary, a pooling layer with:
 \begin{itemize} 
@@ -334,7 +337,7 @@ Produces an output volume$W_2 \times H_2 \times D_2$, where:
 
 \newpage
 
-\subsubsection{Some Popular CNN Architectures}
+\subsubsection{Some Popular CNN Architectures \cite{cnn}}
 \begin{itemize}
 \item \textbf{LeNet:} First successful CNN Architecture which developed by Yann LeCun in 90s.
 \begin{figure}[h]
@@ -361,7 +364,7 @@ Produces an output volume$W_2 \times H_2 \times D_2$, where:
 \end{figure}
 
 \end{itemize}
-\subsection{Recurrent Neural Network(RNN)}
+\subsection{Recurrent Neural Network(RNN) \cite{rnn}}
 Unlike Convolutional Neural Network, Recurrent Neural Network is archithcture is much simpler.RNN is very good at processing sequence data, such as videos, sentence,speech. It takes  $x_t$ and context $s_{t-1}$  as input , and preduce output  $o_t$ at each time step.
 
 \begin{figure}[h]
@@ -373,11 +376,11 @@ Unlike Convolutional Neural Network, Recurrent Neural Network is archithcture is
 
 \newpage
 \section{Requirements Specification}
-
+This project aims to train a network which can detect all objects if the object's name is included in the given vocabulary list.In addition, the project should be able to bound interested objects and show its caption for each object.To do that, the project should also have a visual interface for users.
 \section{Design}
 
-\subsection{Platform and dependences}
-This project is running on Torch, it is a open source deep learning framework which can build network architecture and train it. It is also a script language based on Lua programming language.It is efficient and easy to use, except it lacks Python Interface.So in this project, some data exchange between Lua script and Python script is on JSON forma.Torch7 is the version using in this project, but Torch is not the only one library.It also requires some other libraries for neural networks, images and GPU computation.
+\subsection{Platform and dependences \cite{dec}}
+This project is running on Torch, it is an open source deep learning framework which can build network architecture and train it. It is also a script language based on Lua programming language.It is efficient and easy to use, except it lacks Python Interface.So in this project, some data exchange between Lua script and Python script is in JSON format.Torch7 is the version using in this project, but Torch is not the only one library.It also requires some other libraries for neural networks, images, and GPU computation.
 
 \begin{itemize}
 \item nn
@@ -413,9 +416,7 @@ The whole project composed of three main neural networks,VGG-16(Convoluational N
 \includegraphics[width=0.9\textwidth]{network.png}
 \caption{Main networks}
 \end{figure}
-At the begining of the neural network, a VGG-16 was used to extract features.And this VGG-16 has been pretrained by ImageNet.\\
-
-(NEED TO ADD VGG details)\\
+At the begining of the neural network, a VGG-16 was used to extract features.And this VGG-16 has been pretrained by ImageNet\cite{vgg}.\\
 As we mentioned before, The VGG-16 architecture composed of 13 layers of  3$\times $3 convolution kernels and 5 layers of 2$\times$2 max pooling kernels.In this project we only remain the first four max pooling layers.
 
 \begin{figure}[h]
@@ -436,7 +437,7 @@ In summary :
 width=(224 - 3+2$\times$1)/1+1=224, height=(224 - 3+2$\times$1)/1+1=224\\
 So for each time the image go through convolution layer width and height remains the same. As for pooling layer, each 2$\times$2 pooling will reduce the tensor size to a half.We have 4 layers of max pooling, so $width=224/2^4=14$,$height=224/2^4=14$.In a word, the VGG-16 will convert a 3$\times$224$\times$224 RGB image to a 512$\times$14$\times$14 tensor.(We use 512 kernels in last convolution layer).The output of this VGG-16 neural network will feed to region proposal network(RPN) in next main neural network.
 \subsubsection{Fully Convolutional Localization Network(FCLN)}
-A Region Proposal Network(RPN) takes feature maps as input from last networks(In my case it is VGG-16 as we mentioned before) and outputs a set of proposal regions which has been marked with  scores.
+A Region Proposal Network(RPN)\cite{frcnn} takes feature maps as input from last networks(In my case it is VGG-16 as we mentioned before) and outputs a set of proposal regions which has been marked with  scores.
 To general region proposals, we use a sliding-window through the convolutional feature maps.Each sliding-window can general k anchors.We use 3 scales and 3 aspect ratios for each sliding-window, so $k=3\times 3=9$.And all these 9 anchors are centered at the same sliding-window.
 
 \begin{figure}[h]
@@ -454,7 +455,7 @@ To do these, we feed our feature map to a $3\times 3$ convolution with 256 kerne
 \caption{Coompute anchors}
 \end{figure}
 
-Given an anchor with center $(x_a,y_a)$, width $w_a$,height $h_a$, scalas as we computed before$(t_x,t_y,t_w,t_h)$will project anchor coordinates to original region coordinates.
+Given an anchor with center $(x_a,y_a)$, width $w_a$,height $h_a$, scalas as we computed before$(t_x,t_y,t_w,t_h)$will project anchor coordinates to original region coordinates.\cite{frcnn}\cite{rnn}
 \[x=x_a+t_xw_a\]
 \[y=y_a+t_yh_a\]
 \[w=w_aexp(t_w)\]
@@ -475,7 +476,7 @@ After  sampling, we get a tensor of size $B\times 4$ which refer to a set of  re
 \begin{figure}[h]
 \centering
 \includegraphics[width=0.8\textwidth]{transform.png}
-\caption{Spatial Transformer}
+\caption{Spatial Transformer\cite{spatial}}
 \end{figure}
 
 
@@ -512,7 +513,7 @@ Samping grid can be computed by:\\
 \]
 $$G=\{G_i\},G_i=(x_i^t,y_i^t)$$
 
-Where $(x_i^s,y_i^s)$ are source coordinates of input feature map $U$, $(x_i^t,y_i^t)$ are target coordinates of output feature $V$.The two coordiantes $(x_i^s,y_i^s)$ and $(x_i^t,y_i^t)$ refer to the same pxiel, but in different tensors.To compute output tensor, we normally with a sampling kernel $k$.
+Where $(x_i^s,y_i^s)$ are source coordinates of input feature map $U$, $(x_i^t,y_i^t)$ are target coordinates of output feature $V$.The two coordiantes $(x_i^s,y_i^s)$ and $(x_i^t,y_i^t)$ refer to the same pxiel, but in different tensors.To compute output tensor, we normally with a sampling kernel $k$.\cite{spatial}
 \[V_i=\sum\limits_{m=1}^W\sum\limits_{n=1}^HU_{m,n}^c k(m-x_i^s)(n-y_i^s)\]
 The height and width are normalized, so $-1<x_i^t,y_i^t<1$ and $-1<x_i^s,y_i^s<1$ . A bilinear sampler was used, which means $k$ refer to:
 $$k(d)=max(0,1-|d|)$$\\
@@ -522,23 +523,23 @@ $$k(d)=max(0,1-|d|)$$\\
 \caption{Bilinear Sampler}
 \end{figure}
 
-In summary, the Fully Convolutional Localization Network uses  shared  Conv features, The Conv features input to Region Proposal Network, then sampling B best region proposals and generate sampling grid.The same conv features input to bilinear sampler with sampling grid that give rise to  fixed-size region features.
+In summary, the Fully Convolutional Localization Network uses shared  Conv features, The Conv features input to Region Proposal Network, then sampling B best region proposals and generate sampling grid.The same CONV features input to the bilinear sampler with sampling grid that gives rise to fixed-size region features.
 
 \begin{figure}[h]
 \centering
 \includegraphics[width=0.9\textwidth]{rpn.png}
-\caption{Region Proposal and Localization Network}
+\caption{Region Proposal and Localization Network\cite{densecap}}
 \end{figure}
 
-The region features will input to a recognition neural network which is composed of  two fully connected  layers.The two fully connected layers using RELU as activation and regularized by dropout.Each region feature will convert to a vector then through the recognition network, after that it prodeces a 4096 dimension vector. \\
+The region features will input to a recognition neural network which is composed of two fully connected layers.The two fully connected layers using RELU as activation and regularized by dropout.Each region feature will convert to a vector then through the recognition network, after that it produces a 4096 dimension vector. \\
 
 \subsubsection{Recurrent Neural Network Languge Model}
-To generate region description,we feed the output of FCLN to Recurrent Reural Network after code encoded.
+To generate region description,we feed the output of FCLN to Recurrent Reural Network after code encoded.\cite{rnn1}
 
 \[b_v=W_{hi}[CNN_\theta(I)]\]
 \[h_t=f(Ux_t+W_{hh}h_{t-1}+b_h+ \mathds{1}(t=1)\odot b_v)\] 
 \[y_t=softmax(Vh_t+b_o)\]
-Where $I$ is region pixels, $CNN_\theta$ is convolution layers it has through,and U ,$W_{hi},W_{hh}$and V are weights, $b_v$ and $b_o$ are biases.
+Where $I$ is region pixels, $CNN_\theta$ is convolution layers it has through,and U ,$W_{hi},W_{hh}$and V are weights, $b_v$ and $b_o$ are biases.\cite{densecap}\cite{deepvisual}
 \begin{figure}[h]
 \centering
 \includegraphics[width=0.8\textwidth]{rnnt.png}
@@ -546,19 +547,18 @@ Where $I$ is region pixels, $CNN_\theta$ is convolution layers it has through,an
 \end{figure}
 In training time, given a sentence sequence $[s_1,s_2,s_3, , , ,s_T]$.Each element in this sequence is a single word , more exectly a token. We input convolution features at time steps $t=-1$, then we input a special START token at time step $t=0$.RNN will predict a most likely word from vocabulary. At time step $t=1$, we input $s_1$,as example showing in figure, it is a single word "black".For each time step, we continue inputing $s_2$ until $s_T$.In test time, we keep time step $(t=-1)$ and $(t=0)$ unchange, instead of feeding RNN tokens from sequence  $[s_1,s_2,s_3, , , ,s_T]$, we feed it the most likely token from vocabulary.The iteration will stop until a END token was generated.
 
-\subsection{Web Interface}
 \newpage
 \section{Implementation and Testing}
 
 \subsection{Dataset}
-Almost all the existing datasets contain only images or, image caption pairs, but none of them can provide both image region coordinates and region caption pairs.The dataset I am using is Visual Genome Dataset, it contains around 94,000 images and 4,100,000 regions-grounded captions.The dataset is made by Amazon workers on amazon mechanical turk.Amazon mechanical turk is a platform for workers get paid by doing some Human Intelligence Tasks which was  also lunched on this platform by some developers.
+Almost all the existing datasets contain only images or, image caption pairs, but none of them can provide both image region coordinates and region caption pairs.The dataset I am using is Visual Genome Dataset\cite{images}, it contains around 94,000 images and 4,100,000 regions-grounded captions.The dataset is made by Amazon workers on Amazon Mechanical Turk.Amazon Mechanical Turk is a platform for workers gets paid by doing some Human Intelligence Tasks which was also lunched on this platform by some developers.
 \begin{figure}[h]
 \centering
 \includegraphics[width=0.8\textwidth]{2356274.jpg}
 \caption{Imges Example}
 \end{figure}
 
-The whole dataset is too large for my project, I only use a subset of it.The subset dataset is comprises of  5000 images for testing, another 5000 images for evaluating, and 40000 images for trining.This dataset is not only images, but also contains some JSON files which help to locate objects' coordinate axis, describe regions and objects.
+The whole dataset is too large for my project, I only use a subset of it.The subset dataset is comprised of  5000 images for testing, another 5000 images for evaluating, and 40000 images for trining.This dataset is not only images but also contains some JSON files which help to locate objects' coordinate axis, describe regions and objects.
 
 \begin{figure}[h]
 \begin{subfigure}{0.5\linewidth}
@@ -572,26 +572,24 @@ The whole dataset is too large for my project, I only use a subset of it.The sub
 \label{dataset example}
 \caption{JSON File Example}
 \end{figure}
-As figure showing,the left one is describing objects,images are saving in a Python list, each individual image is a dictionary which contains a unique images id a objects Python list.The objects list contains all objects' information in a same image.Objects information is on dictionary format, where x,y,w,h refer to x and y coordinates, width and height.Each region has a  name, a synset, and a unique object id.Similar to region description file, but region description using phrase for describing purpose instead of name or synsets.
+As figure shows, the left one is describing objects, images are saving in a Python list, each individual image is a dictionary which contains a unique images id a objects Python list.The objects list contains all objects' information in the same image.Objects information is in dictionary format, where x,y,w,h refer to x and y coordinates, width and height.Each region has a  name, a synset, and a unique object id.Similar to region description file, but region description using a phrase for describing purpose instead of name or synsets.
 
 
-As for vocabulary dataset, it comes from University of Aberdeen.Thanks to Professor Annalu Waller and Christopher Norrie, they have chosen the most valuable 166  words for this project. All these 166 words form the whole vocabulary.
-
+As for vocabulary dataset, it comes from University of Aberdeen.\cite{dataset}Thanks to Professor Annalu Waller and Christopher Norrie, they have chosen the most valuable 168  words for this project. All these 168 words form the whole vocabulary.
 \begin{figure}[h]
 \centering
 \includegraphics[width=0.2\textwidth]{vocab.png}
 \caption{Vocabulary Example}
 \end{figure}
-\subsection{Date Preprocessing}
-We are not planning to use the whole dataset as all objects should included in  the vocabulary.First of all we need to know which image is included in vocabulary, which is not.We extract all objects' name and its image ID  from objects.JSON  and write them to a JSON file by objects .If an object showing in  vocabulary, we will write its image ID to a splits file.So this splits JSON file contains all valid image ID which was seperated three parts, test set, training set and evaluation set.(5000 images in test set and 5000 images in evaluation set, 40000 images in training set.)
+\subsection{Data Preprocessing}
+We are not planning to use the whole dataset as all objects should include in the vocabulary.First of all, we need to know which image is included in vocabulary, which is not.We extract all objects' name and its image ID  from objects.JSON  and write them to a JSON file by objects.If an object showing in vocabulary, we will write its image ID to a splits file.So this splits JSON file contains all valid image ID which was separated three parts, test set, a training set, and evaluation set.(5000 images in the test set and 5000 images in evaluation set, 40000 images in training set.)
 \begin{figure}[h]
 \centering
 \includegraphics[width=0.7\textwidth]{regionc.png}
 \caption{Region Preprocessing}
 \end{figure}
 
-Neural networks can not read images and vocabulary directly, all data must convert to HDF5 format.This job was done on Python script.The script takes the whole region description JSON file, splits JSON file and images as input and output a JSON file and a HDF5 database which we will feed to our neural network model.Region description file is well structured with clear phrase.So preprocessing is simple for region data,but not for objects data.As previous figure showing, objects' name and synsets  are on Python list structure which also contains some illegal characters, such as è, û, ™, ç ,dash, hyphen.To solve this problem I create a new key value pair  in objects file named 'obname' and save its clear name by replace illegal characters with space or english characters.
-
+Neural networks can not read images and vocabulary directly, all data must convert to HDF5 format.This job was done on Python script.The script takes the whole region description JSON file, splits JSON file and images as input and output a JSON file and an HDF5 database which we will feed into our neural network model.Region description file is well structured with the clear phrase.So preprocessing is simple for region data, but not for objects data.As previous figure showing, objects' name and synsets are on Python list structure which also contains some illegal characters, such as è, û, ™, ç, dash, hyphen.To solve this problem I create a new key value pair in objects file named 'obname' and save its clear name by replacing illegal characters with space or English characters.
 
 \begin{figure}[h]
 \centering
@@ -599,9 +597,150 @@ Neural networks can not read images and vocabulary directly, all data must conve
 \caption{Object Preprocessing}
 \end{figure}
 
+
+
 \newpage
+
 \section{Evaluation}
-\section{Appraisal}
+This project also provide a visual web result thanks to Justin Johnson and Andrej Karpathy  for the python server code\cite{webinterface}
+\begin{itemize}
+\item  Filter 1:only keep regions if their names in vocabulary,168 words. imblanced classes
+\item  Filter 2:only keep regions if their name in vocabulary,168 words. blanced classes
+\item Filter 3: keep images if one of the region's name included in vocabulary,imblanced classes
+\item  Filter 4:keep images if one of the region's name includes in vocabulary, balanced classes
+
+\end{itemize}
+
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.9\linewidth]{objects_dis.png}
+\caption{Sample number in each class}
+\end{figure}
+
+\begin{table}[]
+\centering
+\caption{Vocabulary part 1}
+\label{Vocabulary part 1}
+\begin{tabular}{lllllllll}
+Order&Words & Samples&Order&Words & Samples&Order&Words & Samples\\
+\hline
+
+1  & bath       & 60   & 2  & football   & 82   & 3  & biscuit    & 95   \\
+4  & radio      & 161  & 5  & moon       & 168  & 6  & bubble     & 220  \\
+7  & cabbage    & 226  & 8  & pear       & 230  & 9  & puppy      & 244  \\
+10 & pencil     & 250  & 11 & guitar     & 280  & 12 & butter     & 289  \\
+13 & toe        & 295  & 14 & lip        & 301  & 15 & photograph & 314  \\
+16 & milk       & 315  & 17 & trouser    & 316  & 18 & jug        & 316  \\
+19 & pasta      & 334  & 20 & sugar      & 339  & 21 & ham        & 347  \\
+22 & pie        & 348  & 23 & pool       & 408  & 24 & tooth      & 408  \\
+25 & drawing    & 410  & 26 & juice      & 410  & 27 & card       & 419  \\
+28 & tissue     & 426  & 29 & cupboard   & 476  & 30 & cage       & 479  \\
+31 & doll       & 511  & 32 & soup       & 522  & 33 & church     & 545  \\
+34 & telephone  & 563  & 35 & coffee     & 572  & 36 & sausage    & 579  \\
+37 & switch     & 593  & 38 & fish       & 621  & 39 & soap       & 671  \\
+40 & rice       & 678  & 41 & potato     & 686  & 42 & strawberry & 696  \\
+43 & shower     & 701  & 44 & egg        & 743  & 45 & cross      & 748  \\
+46 & nail       & 769  & 47 & drink      & 797  & 48 & bin        & 797  \\
+49 & game       & 826  & 50 & goat       & 863  & 51 & mat        & 873  \\
+52 & brush      & 926  & 53 & chicken    & 944  & 54 & straw      & 1051 \\
+55 & toy        & 1071 & 56 & star       & 1160 & 57 & duck       & 1185 \\
+58 & toothbrush & 1260 & 59 & bucket     & 1299 & 60 & sun        & 1361 \\
+61 & jar        & 1390 & 62 & beard      & 1407 & 63 & pan        & 1425 \\
+64 & microwave  & 1442 & 65 & pen        & 1500 & 66 & baby       & 1567 \\
+67 & bun        & 1573 & 68 & television & 1625 & 69 & skirt      & 1831 \\
+70 & paint      & 1838 & 71 & jersey     & 1870 & 72 & stick      & 1878 \\
+73 & ring       & 2060 & 74 & can        & 2100 & 75 & tomato     & 2194 \\
+76 & mouse      & 2276 & 77 & meat       & 2443 & 78 & spoon      & 2485 \\
+79 & computer   & 2531 & 80 & camera     & 2643 & 81 & curtain    & 2928 \\
+82 & sandwich   & 2936 & 83 & dress      & 2963 & 84 & watch      & 3004 \\
+85 & blanket    & 3063 & 86 & bread      & 3068 & 87 & cheese     & 3073 \\
+88 & bicycle    & 3112 & 89 & screen     & 3125 & 90 & apple      & 3237 \\
+91 & knife      & 3449 & 92 & pot        & 3623 & 93 & finger     & 3722 \\
+94 & keyboard   & 4013 & 95 & towel      & 4052 & 96 & lady       & 4212 \\
+97 & mountain   & 4307 & 98 & hill       & 4347 & 99 & desk       & 4763
+\end{tabular}
+\end{table}
+\newpage
+\begin{table}[]
+\centering
+\caption{Vocabulary part 2}
+\label{Vocabulary part 2}
+\begin{tabular}{lllllllll}
+    Order&Words & Samples&Order&Words & Samples&Order&Words & Samples\\
+    \hline
+    
+100 & cake     & 4775  & 101 & glove      & 4918  & 102 & book   & 4956  \\
+103 & toilet   & 5053  & 104 & coat       & 5107  & 105 & child  & 5144  \\
+106 & paper    & 5224  & 107 & seat       & 5244  & 108 & sand   & 5443  \\
+109 & ball     & 5847  & 110 & button     & 5886  & 111 & sink   & 5914  \\
+112 & bed      & 5980  & 113 & plant      & 6221  & 114 & cup    & 6281  \\
+115 & banana   & 6345  & 116 & house      & 6412  & 117 & box    & 6572  \\
+118 & mirror   & 7282  & 119 & bowl       & 7294  & 120 & foot   & 7382  \\
+121 & picture  & 7570  & 122 & motorcycle & 7637  & 123 & rock   & 8763  \\
+124 & bottle   & 8926  & 125 & food       & 9014  & 126 & cat    & 9227  \\
+127 & cow      & 9675  & 128 & bag        & 9763  & 129 & glass  & 9883  \\
+130 & face     & 10201 & 131 & arm        & 10612 & 132 & dog    & 10666 \\
+133 & umbrella & 10807 & 134 & elephant   & 10985 & 135 & flower & 11027 \\
+136 & bird     & 11076 & 137 & bus        & 11190 & 138 & horse  & 11314 \\
+139 & girl     & 11361 & 140 & clock      & 12047 & 141 & shoe   & 12512 \\
+142 & nose     & 12632 & 143 & jacket     & 13680 & 144 & wheel  & 13915 \\
+145 & hat      & 14959 & 146 & floor      & 15396 & 147 & chair  & 15703 \\
+148 & door     & 15763 & 149 & eye        & 16123 & 150 & plate  & 17531 \\
+151 & ear      & 17919 & 152 & people     & 21538 & 153 & leg    & 21824 \\
+154 & hair     & 22871 & 155 & hand       & 24525 & 156 & car    & 24974 \\
+157 & water    & 25006 & 158 & light      & 25436 & 159 & head   & 27071 \\
+160 & table    & 28210 & 161 & grass      & 30883 & 162 & woman  & 40979 \\
+163 & wall     & 43238 & 164 & shirt      & 45203 & 165 & tree   & 47445 \\
+166 & window   & 67623 & 167 & person     & 68577 & 168 & man    & 92553
+\end{tabular}
+\end{table}
+
+
+\begin{figure}[h]
+\begin{subfigure}{0.5\linewidth}
+	\includegraphics[height=5.5cm,width=\textwidth]{origin_loss.png}
+	\caption{Region Description ($\times$ 2000 iters)}
+\end{subfigure}
+\begin{subfigure}{0.5\linewidth}
+	\includegraphics[height=5.5cm,width=\textwidth]{new_loss.png}
+	\caption{Object Detection ($\times$ 2000 iters)}
+\end{subfigure}
+\label{dataset example}
+\caption{Training Loss }
+\end{figure}
+
+\begin{table}[]
+\centering
+\caption{My caption}
+\label{my-label}
+\begin{tabular}{|l|l|l|l|}
+\hline
+Models   & Loss   & mAP   & METOR  \\ \hline
+original & 18.41  & 5.000 & 0.110  \\ \hline
+set 3    & 3.9822 & 3.959 & 0.2351 \\ \hline
+set 1    & 1.75   & 5.467 & 0.2329 \\ \hline
+\end{tabular}
+\end{table}
+\newpage
+
 \section{Summary and Conclusion}
+This project is an object detection model which based on Convolutional Neural Network(CNN), Recurrent Neural Network(RNN) and Region Convolution Neural Network(RCNN).So before I retrain the model, I have to learn much about RNN,CNN, FCLN.In addition, I have to learn the deep platform Torch and Programming Lua.So this takes much time.I retrained the model with different dataset.In the beginning, clean dataset could be a big problem as the object description is not clear.It contains some illegal characters and some images or regions might not fit this project.I use Python script to do all kinds of jobs like this and convert dataset to HDF5 format.Then I start retrain the model with new data.The model is too deep and RNN is also one of the most difficult neural networks to train.So for each time I retrain the model with different parameters, it takes more than 50 hours to get it convergent.Then, I use mean Average precision and METOR to evaluate the result, Loss trace to evaluate the training process.To improve the result, I try to balance the dataset and use new loss function.
+\newpage
 \section{Recommendation for Future Work}
+In this project, dataset is a little bit special, because a JSON file is required.The JSON is used to describe regions' coordiantes, in other words, the JSON file is regions' label.The labeling work is completed by Amzon workers that cost quite a lot time and money.What if we use pure object images to train the network, in that case we will have larger data resource and avoid complicate label work.In addtional, imblanced dataset will never be a problem any more.\\
+The other aspect is the neural network model, the model is too deep,  that cause a long time to train and get it convergent.Most computation consume on region proposal network.Present region proposal network use scale
+and aspect ratio to generate anchors which is much faster than the original sliding-window approach, but not fast enough.In practical scene, a image will generate quite a lot negative and useless anchors but just several positive anchors.\cite{focalloss}
+
+\newpage
+
+
+\printbibliography
+
+\newpage
+\begin{appendices}
+\chapter{Vocabulary List}
+
+%\includepdf[pages=-]{test.pdf}
+\end{appendices}
 \end{document}

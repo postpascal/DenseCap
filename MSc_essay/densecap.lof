@@ -1,27 +1,61 @@
+\boolfalse {citerequest}\boolfalse {citetracker}\boolfalse {pagetracker}\boolfalse {backtracker}\relax 
+\defcounter {refsection}{0}\relax 
 \select@language {english}
+\defcounter {refsection}{0}\relax 
 \contentsline {figure}{\numberline {1}{\ignorespaces Biological Neuron and Artificial Neuron\relax }}{2}
+\defcounter {refsection}{0}\relax 
 \contentsline {figure}{\numberline {2}{\ignorespaces Neuron Network\relax }}{2}
+\defcounter {refsection}{0}\relax 
 \contentsline {figure}{\numberline {3}{\ignorespaces Different types activation\relax }}{3}
+\defcounter {refsection}{0}\relax 
 \contentsline {figure}{\numberline {4}{\ignorespaces BP example \relax }}{5}
-\contentsline {figure}{\numberline {5}{\ignorespaces Fully connected and local connected network\relax }}{6}
-\contentsline {figure}{\numberline {6}{\ignorespaces Multiple convolution kernels\relax }}{7}
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {5}{\ignorespaces Fully connected and local connected network\cite {cnn2}\relax }}{6}
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {6}{\ignorespaces Multiple convolution kernels\cite {cnn2}\relax }}{7}
+\defcounter {refsection}{0}\relax 
 \contentsline {figure}{\numberline {7}{\ignorespaces Convolution\relax }}{8}
-\contentsline {figure}{\numberline {8}{\ignorespaces Pooling operation\relax }}{9}
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {8}{\ignorespaces Pooling operation\cite {cnn}\relax }}{9}
+\defcounter {refsection}{0}\relax 
 \contentsline {figure}{\numberline {9}{\ignorespaces LeNet Architecture\relax }}{10}
+\defcounter {refsection}{0}\relax 
 \contentsline {figure}{\numberline {10}{\ignorespaces AlexNet Architecture\relax }}{10}
+\defcounter {refsection}{0}\relax 
 \contentsline {figure}{\numberline {11}{\ignorespaces VGG-16 Architecture\relax }}{11}
+\defcounter {refsection}{0}\relax 
 \contentsline {figure}{\numberline {12}{\ignorespaces Recurrent Neural Network\relax }}{11}
+\defcounter {refsection}{0}\relax 
 \contentsline {figure}{\numberline {13}{\ignorespaces Main networks\relax }}{13}
+\defcounter {refsection}{0}\relax 
 \contentsline {figure}{\numberline {14}{\ignorespaces VGG-16 Architecture\relax }}{14}
+\defcounter {refsection}{0}\relax 
 \contentsline {figure}{\numberline {15}{\ignorespaces Generating anchors\relax }}{15}
+\defcounter {refsection}{0}\relax 
 \contentsline {figure}{\numberline {16}{\ignorespaces Coompute anchors\relax }}{15}
+\defcounter {refsection}{0}\relax 
 \contentsline {figure}{\numberline {17}{\ignorespaces Intersection over Union\relax }}{16}
-\contentsline {figure}{\numberline {18}{\ignorespaces Spatial Transformer\relax }}{17}
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {18}{\ignorespaces Spatial Transformer\cite {spatial}\relax }}{17}
+\defcounter {refsection}{0}\relax 
 \contentsline {figure}{\numberline {19}{\ignorespaces Bilinear Sampler\relax }}{18}
-\contentsline {figure}{\numberline {20}{\ignorespaces Region Proposal and Localization Network\relax }}{18}
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {20}{\ignorespaces Region Proposal and Localization Network\cite {densecap}\relax }}{18}
+\defcounter {refsection}{0}\relax 
 \contentsline {figure}{\numberline {21}{\ignorespaces Region Proposal and Localization Network\relax }}{19}
+\defcounter {refsection}{0}\relax 
 \contentsline {figure}{\numberline {22}{\ignorespaces Imges Example\relax }}{20}
+\defcounter {refsection}{0}\relax 
 \contentsline {figure}{\numberline {23}{\ignorespaces JSON File Example\relax }}{21}
+\defcounter {refsection}{0}\relax 
 \contentsline {figure}{\numberline {24}{\ignorespaces Vocabulary Example\relax }}{21}
+\defcounter {refsection}{0}\relax 
 \contentsline {figure}{\numberline {25}{\ignorespaces Region Preprocessing\relax }}{22}
+\defcounter {refsection}{0}\relax 
 \contentsline {figure}{\numberline {26}{\ignorespaces Object Preprocessing\relax }}{23}
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {27}{\ignorespaces Sample number in each class\relax }}{25}
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {28}{\ignorespaces Training Loss \relax }}{25}
+\defcounter {refsection}{0}\relax 
+\addvspace {10\p@ }
