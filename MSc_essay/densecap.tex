@@ -712,7 +712,7 @@ Order&Words & Samples&Order&Words & Samples&Order&Words & Samples\\
 
 \begin{table}[]
 \centering
-\caption{My caption}
+\caption{Result:}
 \label{my-label}
 \begin{tabular}{|l|l|l|l|}
 \hline
@@ -723,6 +723,58 @@ set 1    & 1.75   & 5.467 & 0.2329 \\ \hline
 \end{tabular}
 \end{table}
 \newpage
+
+
+
+\subsubsection{Training Result on imbalance 168 classes}
+\begin{figure}[h]
+\begin{subfigure}{0.5\linewidth}
+	\includegraphics[height=5.5cm,width=\textwidth]{smaller_loss_train.png}
+	\caption{Training Loss}
+\end{subfigure}
+\begin{subfigure}{0.5\linewidth}
+	\includegraphics[height=5.5cm,width=\textwidth]{smaller_loss_val.png}
+	\caption{Validation Loss}
+\end{subfigure}
+\label{Training set 1}
+\caption{Loss on blanced 70 classes }
+
+\end{figure}
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.6\linewidth]{smaller_mAP_val.png}
+\caption{Validation mAP}
+\end{figure}
+\newpage
+
+
+
+\newpage
+
+
+
+\subsubsection{Training Result on imbalance 168 classes}
+\begin{figure}[h]
+\begin{subfigure}{0.5\linewidth}
+	\includegraphics[height=5.5cm,width=\textwidth]{train_loss_exect168.png}
+	\caption{Training Loss}
+\end{subfigure}
+\begin{subfigure}{0.5\linewidth}
+	\includegraphics[height=5.5cm,width=\textwidth]{val_loss_exect168.png}
+	\caption{Validation Loss}
+\end{subfigure}
+\label{Training set 1}
+\caption{Loss on imblance 168 classes }
+
+\end{figure}
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.6\linewidth]{map_exect168.png}
+\caption{Validation mAP}
+\end{figure}
+\newpage
+
+
 
 \section{Summary and Conclusion}
 This project is an object detection model which based on Convolutional Neural Network(CNN), Recurrent Neural Network(RNN) and Region Convolution Neural Network(RCNN).So before I retrain the model, I have to learn much about RNN,CNN, FCLN.In addition, I have to learn the deep platform Torch and Programming Lua.So this takes much time.I retrained the model with different dataset.In the beginning, clean dataset could be a big problem as the object description is not clear.It contains some illegal characters and some images or regions might not fit this project.I use Python script to do all kinds of jobs like this and convert dataset to HDF5 format.Then I start retrain the model with new data.The model is too deep and RNN is also one of the most difficult neural networks to train.So for each time I retrain the model with different parameters, it takes more than 50 hours to get it convergent.Then, I use mean Average precision and METOR to evaluate the result, Loss trace to evaluate the training process.To improve the result, I try to balance the dataset and use new loss function.
@@ -738,9 +790,5 @@ and aspect ratio to generate anchors which is much faster than the original slid
 \printbibliography
 
 \newpage
-\begin{appendices}
-\chapter{Vocabulary List}
 
-%\includepdf[pages=-]{test.pdf}
-\end{appendices}
 \end{document}
